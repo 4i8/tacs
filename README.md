@@ -225,8 +225,8 @@ tacs.end();
 
 ```js
 //if you want get Added Data or option
-tacs.get().added; //[]returns an array with the added data
-tacs.get().option; //""returns the last option
+tacs.get().added; //Array: returns an array with the added data
+tacs.get().option; //String: returns the last option
 ```
 
 ## Links
