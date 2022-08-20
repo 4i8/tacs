@@ -1,0 +1,33 @@
+{
+  "name": "tacs",
+  "version": "1.0.0",
+  "description": "tacs: Task Conveyor System is a system that can be used to run a series of functions in a sequential order.",
+  "main": "index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tacs",
+    "task",
+    "conveyor",
+    "system",
+    "sequential",
+    "order",
+    "loadBalancer",
+    "load-balancer",
+    "load-balancer-system",
+    "load-balancer-system-tacs",
+    "load-balancer-system-tacs-task"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/4i8/tacs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/4i8/tacs/issues"
+  },
+  "homepage": "https://github.com/4i8/tacs#readme",
+  "license": "Apache-2.0",
+  "author": "Arth"
+}
