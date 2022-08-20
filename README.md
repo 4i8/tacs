@@ -30,7 +30,7 @@ const tacs = new conveyor();
 ```
 
 # **Example**
-### [Documentation](#documentation)
+### [Go To Documentation](#documentation)
 ```js
 const conveyor = require("tacs");
 const tacs = new conveyor();
@@ -98,7 +98,7 @@ setTimeout(() => {
 }, 5000);
 ```
 
-## Documentation
+## documentation
 
 <table>
   <tr>
