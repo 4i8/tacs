@@ -1,6 +1,6 @@
 <div align="center">
   <p>
- <a href="https://www.npmjs.com/package/tacs"><img  src="https://github.com/4i8/tacs/blob/master/logo/tacs.png" width="400" alt="tacs" /></a>
+ <a href="https://www.npmjs.com/package/tacs"><img  src="https://github.com/4i8/tacs/blob/master/front/logo.png" width="400" alt="tacs" /></a>
   </p>
   <p>
  <a href="https://github.com/arosteam"><img src="https://img.shields.io/static/v1?label=powered%20by&message=Aros&color=000636&style=for-the-badge&logo=Windows%20Terminal&logoColor=fff"/></a>
@@ -16,6 +16,11 @@ tacs: Task Conveyor System is a system that can be used to run a series of funct
 - very helpful for automation or express.js development tasks
 - very useful for running a series of functions in a sequential order
 
+## Gif Example By Dribbble
+
+  <p>
+ <a href="https://dribbble.com/"><img  src="https://github.com/4i8/tacs/blob/master/front/By%20Dribbble.gif" width="400" alt="tacs" /></a>
+  </p>
 # **Installation**
 
 ```sh-session
