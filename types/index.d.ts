@@ -1,40 +1,42 @@
 export = conveyor;
 declare function conveyor(): void;
+export declare type Events = "add";
 declare class conveyor {
   /**
-   * @description - get Added Data or option
+   * @description {callback} - this is $lab function that will be called when you add data or when you call next
    */
-  get: () => {
-    added: any[];
-    option: string;
-  };
+  $lab(callback: any): void;
   /**
-   * @description {callback} - The lab function is activated when you add data by calling the function add or when you call the function next
+   * @description {timeout} - go to next index if you use {timeout} milliseconds later after timeout is over it will be continue
    */
-  lab: (callback: any) => void;
-  /**
-   * @description {event} - add - end
-   * @description {callback} - Callback function is activated when you add data or the conveyor is end
-   */
-  on: (event_: any, callback: any) => void;
-  /**
-   * @description {timeout} - go to the next data {timeout} milliseconds later after timeout is over
-   */
-  next: (timeout?: number) => void;
+  next(timeout?: number): void;
   /**
    * @description {data} - add data to the conveyor {data} is an array
    */
-  add: (data: any) => void;
+  add(data: any): void;
   /**
-   * @description - end the conveyor
+   * @description {timeout} - sleep the conveyor {timeout} milliseconds later after timeout is over it wil be next automatically
    */
-  end: () => void;
+  sleep(timeout: any): void;
   /**
-   * @description {timeout} - sleep the conveyor {timeout} milliseconds later after timeout is over it will be wake up
+   * @description {event} - add
+   * @description {callback} - The events
+   * @param {event_} add
    */
-  sleep: (timeout: any) => void;
+  on(event_: Events, callback: any): void;
   /**
-   * @description - restart the conveyor
+   * @description - restart the conveyor use this and it will restart from the first index
    */
-  restart: () => void;
+  restart(): void;
+  /**
+   * @description - end the conveyor use this if you use this you can't use next() or any other function
+   */
+  end(): void;
+  /**
+   * @description - get Added Data or option
+   */
+  get(): {
+    added: any[];
+    option: string;
+  };
 }

@@ -13,21 +13,21 @@ function conveyor() {
   };
   let event = new events.EventEmitter();
   event.setMaxListeners(0);
-  event.on("backlab", (res) => {
+  event.on("back$lab", (res) => {
     if (ClientData.length > 0) {
-      event.emit("lab", res);
+      event.emit("$lab", res);
     }
   });
   /**
-   * @description {callback} - this is lab function that will be called when you add data or when you call next
+   * @description {callback} - this is $lab function that will be called when you add data or when you call next
    */
-  this.lab = function (callback) {
+  this.$lab = function (callback) {
     if (extension.end) return console.error(new Error("Conveyor is end !"));
     if (extension.running)
       return console.error(new Error("Conveyor is already running !"));
     extension.decrease = ClientData.length;
     extension.running = true;
-    event.on("lab", callback);
+    event.on("$lab", callback);
   };
   /**
    * @description {timeout} - go to next index if you use {timeout} milliseconds later after timeout is over it will be continue
@@ -46,7 +46,7 @@ function conveyor() {
     setTimeout(
       () => {
         option = ClientData[index];
-        event.emit("backlab", ClientData[index]);
+        event.emit("back$lab", ClientData[index]);
       },
       timeout ? timeout : 200
     );
@@ -61,12 +61,12 @@ function conveyor() {
     ClientData = ClientData.concat(data);
     extension.decrease = data.length;
     if (!extension.start && index == 0) {
-      event.emit("backlab", ClientData[index]);
+      event.emit("back$lab", ClientData[index]);
       extension.start = true;
     } else if (extension.light) {
       index++;
       setTimeout(() => {
-        event.emit("backlab", ClientData[index]);
+        event.emit("back$lab", ClientData[index]);
       }, 200);
     }
     setTimeout(() => {
@@ -87,11 +87,12 @@ function conveyor() {
     }, timeout);
   };
   /**
-   * @description {event} - add - end
-   * @description {callback} - Callback function is activated when you add data or the conveyor is end
+   * @description {event} - add
+   * @description {callback} - The events
+   * @param {event_} add
    */
   this.on = function (event_, callback) {
-    if (["add", "end"].includes(event_)) {
+    if (["add"].includes(event_)) {
       event.on(event_, callback);
     } else {
       event.on(event_, "Event is not found !");

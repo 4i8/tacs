@@ -22,6 +22,7 @@ tacs: Task Conveyor System is a system that can be used to run a series of funct
 npm install tacs
 yarn add tacs
 ```
+
 # **How to use**
 
 ```js
@@ -30,11 +31,13 @@ const tacs = new conveyor();
 ```
 
 # **Example**
+
 ### [Go To Documentation](#documentation)
+
 ```js
 const conveyor = require("tacs");
 const tacs = new conveyor();
-tacs.lab((data) => {
+tacs.$lab((data) => {
   if (data.name.length >= 1) {
     console.log(data.name);
     tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
@@ -106,8 +109,8 @@ setTimeout(() => {
     <th>Description</th>
     <th>explain</th>
   <tr>
-    <td>lab()</td>
-    <td>this is lab function that will be called when you add data or when you call next</td>
+    <td>$lab()</td>
+    <td>this is $lab function that will be called when you add data or when you call next</td>
     <td><a href=#lab>Go to example</a></td>
   </tr>
    <tr>
@@ -127,7 +130,7 @@ setTimeout(() => {
   </tr>
    <tr>
     <td>on()</td>
-    <td>Callback function is activated when you add data or the conveyor is end</td>
+    <td>The events</td>
     <td><a href=#on>Go to example</a></td>
   </tr> 
    <tr>
@@ -157,8 +160,8 @@ const tacs = new conveyor();
 ### **lab**
 
 ```js
-//this is lab function that will be called when you add data or when you call next
-tacs.lab((data) => {
+//this is $lab function that will be called when you add data or when you call next
+tacs.$lab((data) => {
   console.log(data);
   tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
 });
@@ -198,29 +201,9 @@ tacs.sleep(1000); //sleep for 1 second
 ### **on**
 
 ```js
-//Callback function is activated when you add data or the conveyor is end
+//The events
 tacs.on("add", (data) => {
   console.log(data); //data is an array
-});
-tacs.on("end", (statistics) => {
-  console.log("Conveyor is end !", statistics);
-  //statistics is an object with the following properties:
-  //   data: [
-  //     { name: 'JavaScript', id: 1 },
-  //     { name: 'Objective-C', id: 2 },
-  //     { name: 'C', id: 3 },
-  //     { name: 'C++', id: 4 },
-  //     { name: 'C#', id: 5 },
-  //     { name: 'Java', id: 6 },
-  //     { name: 'Python', id: 7 },
-  //     { name: 'John', age: 30 },
-  //     { name: 'Mary', age: 25 },
-  //     { name: 'Mike', age: 20 },
-  //     { name: 'Jane', age: 35 },
-  //     { name: 'Joe', age: 40 }
-  //   ],
-  //   option: { name: 'JavaScript', id: 1 }
-  // }
 });
 ```
 
