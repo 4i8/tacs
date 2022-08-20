@@ -1,0 +1,258 @@
+<div align="center">
+  <p>
+ <a href="https://www.npmjs.com/package/tacs"><img  src="https://github.com/4i8/tacs/blob/master/logo/tacs.png" width="400" alt="tacs" /></a>
+  </p>
+  <p>
+ <a href="https://github.com/arosteam"><img src="https://img.shields.io/static/v1?label=powered%20by&message=Aros&color=000636&style=for-the-badge&logo=Windows%20Terminal&logoColor=fff"/></a>
+ <a href="https://www.npmjs.com/package/tacs"><img src="https://img.shields.io/npm/v/tacs.svg?style=for-the-badge" alt="NPM version" /></a>
+ <a href="https://www.npmjs.com/package/tacs"><img src="https://img.shields.io/npm/dt/tacs.svg?maxAge=3600&style=for-the-badge" alt="NPM downloads" /></a>
+  </p>
+</div>
+
+# **Task Conveyor System**
+
+tacs: Task Conveyor System is a system that can be used to run a series of functions in a sequential order.
+
+- very helpful for automation or express.js development tasks
+- very useful for running a series of functions in a sequential order
+
+# **Installation**
+
+```sh-session
+npm install tacs
+yarn add tacs
+```
+
+# **How to use**
+
+```js
+const conveyor = require("tacs");
+const tacs = new conveyor();
+```
+
+## Documentation
+
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Description</th>
+    <th>explain</th>
+  <tr>
+    <td>lab()</td>
+    <td>this is lab function that will be called when you add data or when you call next</td>
+    <td><a href=#lab>Go to example</a></td>
+  </tr>
+   <tr>
+    <td>next()</td>
+    <td>go to next index if you use {timeout} milliseconds later after timeout is over it will be continue</td>
+    <td><a href=#next>Go to example</a></td>
+  </tr>
+     <tr>
+    <td>add()</td>
+    <td>add data to the conveyor {data} is an array</td>
+    <td><a href=#add>Go to example</a></td>
+  </tr>
+    <tr>
+    <td>sleep()</td>
+    <td>sleep the conveyor {timeout} milliseconds later after timeout is over it wil be next automatically</td>
+    <td><a href=#sleep>Go to example</a></td>
+  </tr>
+   <tr>
+    <td>on()</td>
+    <td>Callback function is activated when you add data or the conveyor is end</td>
+    <td><a href=#on>Go to example</a></td>
+  </tr> 
+   <tr>
+    <td>restart()</td>
+    <td>restart the conveyor use this and it will restart from the first index</td>
+    <td><a href=#restart>Go to example</a></td>
+  </tr>
+  <tr>
+    <td>end()</td>
+    <td>end the conveyor use this if you use this you can't use next() or any other function</td>
+    <td><a href=#end>Go to example</a></td>
+  </tr>
+   <tr>
+    <td>get()</td>
+    <td>get Added Data or option</td>
+    <td><a href=#get>Go to example</a></td>
+  </tr>
+</table>
+
+# **details**
+
+```js
+const conveyor = require("tacs");
+const tacs = new conveyor();
+```
+
+### **lab**
+
+```js
+//this is lab function that will be called when you add data or when you call next
+tacs.lab((data) => {
+  console.log(data);
+  tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+});
+```
+
+### **next**
+
+```js
+//go to next index
+tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+```
+
+### **add**
+
+```js
+//if you want to add data to the conveyor use this
+// This is an example of adding data to the conveyor
+//Array
+tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]);
+//Object
+tacs.add({
+  name: "John",
+  age: 30,
+  city: "New York",
+});
+//String or Number or any other type
+tacs.add("Arth");
+```
+
+### **sleep**
+
+```js
+//sleep the conveyor {timeout} milliseconds later after timeout is over it wil be next automatically
+tacs.sleep(1000); //sleep for 1 second
+```
+
+### **on**
+
+```js
+//Callback function is activated when you add data or the conveyor is end
+tacs.on("add", (data) => {
+  console.log(data); //data is an array
+});
+tacs.on("end", (statistics) => {
+  console.log("Conveyor is end !", statistics);
+  //statistics is an object with the following properties:
+  //   data: [
+  //     { name: 'JavaScript', id: 1 },
+  //     { name: 'Objective-C', id: 2 },
+  //     { name: 'C', id: 3 },
+  //     { name: 'C++', id: 4 },
+  //     { name: 'C#', id: 5 },
+  //     { name: 'Java', id: 6 },
+  //     { name: 'Python', id: 7 },
+  //     { name: 'John', age: 30 },
+  //     { name: 'Mary', age: 25 },
+  //     { name: 'Mike', age: 20 },
+  //     { name: 'Jane', age: 35 },
+  //     { name: 'Joe', age: 40 }
+  //   ],
+  //   option: { name: 'JavaScript', id: 1 }
+  // }
+});
+```
+
+### **restart**
+
+```js
+//if you want to restart the conveyor use this and it will restart from the first index
+tacs.restart();
+```
+
+### **end**
+
+```js
+//end the conveyor use this if you use this you can't use next() or any other function
+tacs.end();
+```
+
+### **get**
+
+```js
+//if you want get Added Data or option
+tacs.get().added; //[]returns an array with the added data
+tacs.get().option; //""returns the last option
+```
+
+# **Example**
+
+```js
+const conveyor = require("tacs");
+const tacs = new conveyor();
+tacs.lab((data) => {
+  if (data.name.length >= 1) {
+    console.log(data.name);
+    tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+  }
+});
+tacs.add([
+  {
+    name: "JavaScript",
+    id: 1,
+  },
+  {
+    name: "Objective-C",
+    id: 2,
+  },
+  {
+    name: "C",
+    id: 3,
+  },
+  {
+    name: "C++",
+    id: 4,
+  },
+  {
+    name: "C#",
+    id: 5,
+  },
+  {
+    name: "Java",
+    id: 6,
+  },
+  {
+    name: "Python",
+    id: 7,
+  },
+]);
+tacs.add([
+  {
+    name: "John",
+    age: 30,
+  },
+  {
+    name: "Mary",
+    age: 25,
+  },
+  {
+    name: "Mike",
+    age: 20,
+  },
+  {
+    name: "Jane",
+    age: 35,
+  },
+  {
+    name: "Joe",
+    age: 40,
+  },
+]);
+setTimeout(() => {
+  tacs.add([{ name: "Arth", age: "unknown" }]);
+}, 5000);
+```
+
+## Links
+
+- [Twiter](https://twitter.com/onlyarth)
+- [Github](https://github.com/4i8)
+
+## License
+
+- [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+# tacs
+# tacs
