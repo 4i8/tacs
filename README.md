@@ -22,12 +22,80 @@ tacs: Task Conveyor System is a system that can be used to run a series of funct
 npm install tacs
 yarn add tacs
 ```
-
 # **How to use**
 
 ```js
 const conveyor = require("tacs");
 const tacs = new conveyor();
+```
+
+# **Example**
+### [Documentation](#documentation)
+```js
+const conveyor = require("tacs");
+const tacs = new conveyor();
+tacs.lab((data) => {
+  if (data.name.length >= 1) {
+    console.log(data.name);
+    tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+  }
+});
+tacs.add([
+  {
+    name: "JavaScript",
+    id: 1,
+  },
+  {
+    name: "Objective-C",
+    id: 2,
+  },
+  {
+    name: "C",
+    id: 3,
+  },
+  {
+    name: "C++",
+    id: 4,
+  },
+  {
+    name: "C#",
+    id: 5,
+  },
+  {
+    name: "Java",
+    id: 6,
+  },
+  {
+    name: "Python",
+    id: 7,
+  },
+]);
+tacs.add([
+  {
+    name: "John",
+    age: 30,
+  },
+  {
+    name: "Mary",
+    age: 25,
+  },
+  {
+    name: "Mike",
+    age: 20,
+  },
+  {
+    name: "Jane",
+    age: 35,
+  },
+  {
+    name: "Joe",
+    age: 40,
+  },
+]);
+//or
+setTimeout(() => {
+  tacs.add([{ name: "Arth", age: "unknown" }]);
+}, 5000);
 ```
 
 ## Documentation
@@ -178,74 +246,6 @@ tacs.get().added; //[]returns an array with the added data
 tacs.get().option; //""returns the last option
 ```
 
-# **Example**
-
-```js
-const conveyor = require("tacs");
-const tacs = new conveyor();
-tacs.lab((data) => {
-  if (data.name.length >= 1) {
-    console.log(data.name);
-    tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
-  }
-});
-tacs.add([
-  {
-    name: "JavaScript",
-    id: 1,
-  },
-  {
-    name: "Objective-C",
-    id: 2,
-  },
-  {
-    name: "C",
-    id: 3,
-  },
-  {
-    name: "C++",
-    id: 4,
-  },
-  {
-    name: "C#",
-    id: 5,
-  },
-  {
-    name: "Java",
-    id: 6,
-  },
-  {
-    name: "Python",
-    id: 7,
-  },
-]);
-tacs.add([
-  {
-    name: "John",
-    age: 30,
-  },
-  {
-    name: "Mary",
-    age: 25,
-  },
-  {
-    name: "Mike",
-    age: 20,
-  },
-  {
-    name: "Jane",
-    age: 35,
-  },
-  {
-    name: "Joe",
-    age: 40,
-  },
-]);
-setTimeout(() => {
-  tacs.add([{ name: "Arth", age: "unknown" }]);
-}, 5000);
-```
-
 ## Links
 
 - [Twiter](https://twitter.com/onlyarth)
@@ -254,5 +254,3 @@ setTimeout(() => {
 ## License
 
 - [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)
-# tacs
-# tacs
