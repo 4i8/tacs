@@ -18,7 +18,7 @@ tacs: Task Conveyor System is a system that can be used to run a series of funct
 
 ## Gif Example By Dribbble
   <p>
- <a href="https://dribbble.com/"><img  src="https://github.com/4i8/tacs/raw/master/front/By%20Dribbble.gif" width="500" alt="tacs" /></a>
+ <a href="https://dribbble.com/"><img  src="https://github.com/4i8/tacs/raw/master/front/By%20Dribbble.gif" width="400" alt="tacs" /></a>
   </p>
 
 # **Installation**
