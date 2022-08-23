@@ -32,6 +32,7 @@ yarn add tacs
 # **Updates**
 
 ```
++ Added: add index in callback $lab() like this $lab((data, index)=>{})
 + Replaced To: setTimeout(tacs.next, 1000);
 - Removed: tacs.next(1000);
 - Removed: tacs.restart();
