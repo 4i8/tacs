@@ -32,7 +32,7 @@ yarn add tacs
 # **Updates**
 
 ```
-+ Added: setTimeout(tacs.next, 1000);
++ Replaced To: setTimeout(tacs.next, 1000);
 - Removed: tacs.next(1000);
 - Removed: tacs.restart();
 + Replaced To: tacs.add(tacs.get().added);
@@ -172,7 +172,7 @@ const tacs = new conveyor();
 ```js
 //this is $lab function that will be emit when you add data or when you call next
 tacs.$lab((data, index) => {
-  console.log(data, index);//index is the index of the data in the array
+  console.log(data, index); //index is the index of the data in the array
   tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
 });
 ```
