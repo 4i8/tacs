@@ -31,7 +31,7 @@ yarn add tacs
 
 # **Updates**
 
-```*
+```
 + Added: setTimeout(tacs.next, 1000);
 - Removed: tacs.next(1000);
 - Removed: tacs.restart();
