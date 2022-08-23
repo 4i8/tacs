@@ -53,9 +53,9 @@ const tacs = new conveyor();
 ```js
 const conveyor = require("tacs");
 const tacs = new conveyor();
-tacs.$lab((data) => {
+tacs.$lab((data, index) => {
   if (data.name.length >= 1) {
-    console.log(data.name);
+    console.log(data.name, index);
     tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
   }
 });
