@@ -3,13 +3,13 @@ declare function conveyor(): void;
 export declare type Events = "add";
 declare class conveyor {
   /**
-   * @description {callback} - this is $lab function that will be called when you add data or when you call next
+   * @description {callback} - this is $lab function that will be emit when you add data or when you call next
    */
-  $lab(callback: any): void;
+  $lab(callback: (value: string, index: number) => any): void;
   /**
-   * @description {timeout} - go to next index if you use {timeout} milliseconds later after timeout is over it will be continue
+   * @description go to next index if you set timeout use like this : setTimeout(tacs.next, 1000);//second
    */
-  next(timeout?: number): void;
+  next(): void;
   /**
    * @description {data} - add data to the conveyor {data} is an array
    */
@@ -24,10 +24,6 @@ declare class conveyor {
    * @param {event_} add
    */
   on(event_: Events, callback: any): void;
-  /**
-   * @description - restart the conveyor use this and it will restart from the first index
-   */
-  restart(): void;
   /**
    * @description - end the conveyor use this if you use this you can't use next() or any other function
    */

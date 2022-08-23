@@ -15,7 +15,7 @@ function conveyor() {
   event.setMaxListeners(0);
   event.on("back$lab", (res) => {
     if (ClientData.length > 0) {
-      event.emit("$lab", res);
+      event.emit("$lab", res, ClientData.indexOf(res));
     }
   });
   /**
@@ -30,9 +30,9 @@ function conveyor() {
     event.on("$lab", callback);
   };
   /**
-   * @description {timeout} - go to next index if you use {timeout} milliseconds later after timeout is over it will be continue
+   * @description - go to next index if you set timeout use like this : setTimeout(tacs.next, 1000);//second
    */
-  this.next = function (timeout = 1) {
+  this.next = function () {
     if (extension.end) return console.error(new Error("Conveyor is end !"));
     if (extension.sleep) return; //Conveyor is sleeping !
     const i = extension.decrease--;
@@ -43,13 +43,10 @@ function conveyor() {
     }
     index++;
     extension.light = false;
-    setTimeout(
-      () => {
-        option = ClientData[index];
-        event.emit("back$lab", ClientData[index]);
-      },
-      timeout ? timeout : 200
-    );
+    setTimeout(() => {
+      option = ClientData[index];
+      event.emit("back$lab", ClientData[index]);
+    }, 1);
     return;
   };
   /**
@@ -60,6 +57,7 @@ function conveyor() {
     if (data.length == 0 && typeof data !== "string") return;
     ClientData = ClientData.concat(data);
     extension.decrease = data.length;
+    if (extension.sleep) return; //Conveyor is sleeping !
     if (!extension.start && index == 0) {
       event.emit("back$lab", ClientData[index]);
       extension.start = true;
@@ -97,13 +95,6 @@ function conveyor() {
     } else {
       event.on(event_, "Event is not found !");
     }
-  };
-  /**
-   * @description - restart the conveyor use this and it will restart from the first index
-   */
-  this.restart = function () {
-    if (extension.end) return console.error(new Error("Conveyor is end !"));
-    this.add(ClientData);
   };
   /**
    * @description - end the conveyor use this if you use this you can't use next() or any other function

@@ -17,6 +17,7 @@ tacs: Task Conveyor System is a system that can be used to run a series of funct
 - very useful for running a series of functions in a sequential order
 
 ## Gif Example By Dribbble
+
   <p>
  <a href="https://dribbble.com/"><img  src="https://github.com/4i8/tacs/raw/master/front/By%20Dribbble.gif" width="500" alt="tacs" /></a>
   </p>
@@ -26,6 +27,15 @@ tacs: Task Conveyor System is a system that can be used to run a series of funct
 ```sh-session
 npm install tacs
 yarn add tacs
+```
+
+# **Updates**
+
+```
++ Added: setTimeout(tacs.next, 1000);
+- Removed: tacs.next(1000);
+- Removed: tacs.restart();
++ Replaced To: tacs.add(tacs.get().added);
 ```
 
 # **How to use**
@@ -45,7 +55,7 @@ const tacs = new conveyor();
 tacs.$lab((data) => {
   if (data.name.length >= 1) {
     console.log(data.name);
-    tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+    tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
   }
 });
 tacs.add([
@@ -100,7 +110,7 @@ tacs.add([
     age: 40,
   },
 ]);
-//or
+//you can use this to add a delay between each function
 setTimeout(() => {
   tacs.add([{ name: "Arth", age: "unknown" }]);
 }, 5000);
@@ -115,12 +125,12 @@ setTimeout(() => {
     <th>explain</th>
   <tr>
     <td>$lab()</td>
-    <td>this is $lab function that will be called when you add data or when you call next</td>
+    <td>this is $lab function that will be emit when you add data or when you call next</td>
     <td><a href=#lab>Go to example</a></td>
   </tr>
    <tr>
     <td>next()</td>
-    <td>go to next index if you use {timeout} milliseconds later after timeout is over it will be continue</td>
+    <td>go to next index if you set timeout use like this : setTimeout(tacs.next, 1000);//second</td>
     <td><a href=#next>Go to example</a></td>
   </tr>
      <tr>
@@ -138,11 +148,6 @@ setTimeout(() => {
     <td>The events</td>
     <td><a href=#on>Go to example</a></td>
   </tr> 
-   <tr>
-    <td>restart()</td>
-    <td>restart the conveyor use this and it will restart from the first index</td>
-    <td><a href=#restart>Go to example</a></td>
-  </tr>
   <tr>
     <td>end()</td>
     <td>end the conveyor use this if you use this you can't use next() or any other function</td>
@@ -165,10 +170,10 @@ const tacs = new conveyor();
 ### **lab**
 
 ```js
-//this is $lab function that will be called when you add data or when you call next
-tacs.$lab((data) => {
-  console.log(data);
-  tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+//this is $lab function that will be emit when you add data or when you call next
+tacs.$lab((data, index) => {
+  console.log(data, index);//index is the index of the data in the array
+  tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
 });
 ```
 
@@ -176,7 +181,7 @@ tacs.$lab((data) => {
 
 ```js
 //go to next index
-tacs.next(); // if you need to add timeout use this next(Milliseconds) like this next(1000);
+tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
 ```
 
 ### **add**
@@ -216,7 +221,7 @@ tacs.on("add", (data) => {
 
 ```js
 //if you want to restart the conveyor use this and it will restart from the first index
-tacs.restart();
+tacs.add(tacs.get().added);
 ```
 
 ### **end**
