@@ -23,6 +23,25 @@ Tacs is Task Conveyor System is a system that can be used to run a series of fun
  <a href="https://dribbble.com/"><img  src="https://github.com/4i8/tacs/raw/master/front/By%20Dribbble.gif" width="400" alt="tacs" /></a>
   </p>
 
+- [Documentation](#documentation)
+- [Updates](#Updates)
+- [Installation](#installation)
+- [Usage](#Usage)
+  - [Example](#Example)
+- [Method](#Method)
+  - [$lab](#lab)
+  - [next](#next)
+  - [add](#add)
+  - [sleep](#sleep)
+  - [on](#on)
+  - [end](#end)
+  - [get](#get)
+    - [added](#added)
+    - [option](#option)
+    - [remove](#remove)
+    - [exist](#exist)
+
+
 # **Installation**
 
 ```sh-session
@@ -30,13 +49,13 @@ npm install tacs
 yarn add tacs
 ```
 
-
-# **How to use**
+# **Usage**
 
 ```js
 const conveyor = require("tacs");
 const tacs = new conveyor();
 ```
+
 # **Updates**
 
 > @latest
@@ -185,7 +204,7 @@ setTimeout(() => {
   </tr>
 </table>
 
-# **details**
+# **Method**
 
 ```js
 const conveyor = require("tacs");
@@ -268,36 +287,39 @@ tacs.end();
 
 ### **get**
 
+> # **added**
+
 ```js
-//if you want get Added Data or option or remove or exist
 tacs.get().added; //Array: returns an array with the added element
+```
+
+> # **option**
+
+```js
 tacs.get().option; //String: returns the last option
+```
+
+> # **remove**
+
+```js
 tacs.get(/*<Element>*/).remove(); //No Return: remove element from the array
-tacs.get(/*<Element>*/).exist(); //Boolean: returns true if the element exist in the array
 //Some examples
-
-//@Remove element from the array
-
 tacs.get({ name: "Joe", age: 40 }).remove(); //remove element from the array
 //or you can use this specitic value
 tacs.get({ name: "Joe" }).remove(); //remove element from the array
-//String or Number or any other type
+//String or Number or any other type exmaple for string
 tacs.get("JavaScript").remove(); //remove element from the array
+```
 
-//@Exist element in the array
-tacs
-  .get({
-    name: "Joe",
-    age: 40,
-  })
-  .exist(); //returns true if the element exist in the array
+> # **exist**
+
+```js
+tacs.get(/*<Element>*/).exist(); //Boolean: returns true if the element exist in the array
+//Some examples
+tacs.get({ name: "Joe", age: 40 }).exist(); //returns true if the element exist in the array
 //or you can use this specitic value
-tacs
-  .get({
-    name: "Joe",
-  })
-  .exist(); //returns true if the element exist in the array
-//String or Number or any other type
+tacs.get({ name: "Joe" }).exist(); //returns true if the element exist in the array
+//String or Number or any other type exmaple for string
 tacs.get("JavaScript").exist(); //returns true if the element exist in the array
 ```
 
