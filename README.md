@@ -11,10 +11,11 @@
 
 # **Task Conveyor System**
 
-tacs: Task Conveyor System is a system that can be used to run a series of functions in a sequential order.
+Tacs is Task Conveyor System is a system that can be used to run a series of functions in a sequential order.
 
 - very helpful for automation or express.js development tasks
 - very useful for running a series of functions in a sequential order
+- very useful for running a series of functions in a parallel order
 
 ## Gif Example By Dribbble
 
@@ -29,15 +30,6 @@ npm install tacs
 yarn add tacs
 ```
 
-# **Updates**
-
-```
-+ Added: add index in callback $lab() like this $lab((data, index)=>{})
-+ Replaced To: setTimeout(tacs.next, 1000);
-- Removed: tacs.next(1000);
-- Removed: tacs.restart();
-+ Replaced To: tacs.add(tacs.get().added);
-```
 
 # **How to use**
 
@@ -45,17 +37,38 @@ yarn add tacs
 const conveyor = require("tacs");
 const tacs = new conveyor();
 ```
+# **Updates**
+
+> @latest
+
+```*
++ Added: add remove and exist in get() function//go to the documentation for more details
++ Added: add new event to the event list "end" //go to the documentation for more details
+```
 
 # **Example**
 
 ### [Go To Documentation](#documentation)
 
+#### **Try**
+
 ```js
 const conveyor = require("tacs");
 const tacs = new conveyor();
-tacs.$lab((data, index) => {
-  if (data.name.length >= 1) {
-    console.log(data.name, index);
+tacs.$lab((element, index, remove) => {
+  /*if you use 
+    remove
+    function like this
+    tacs.get({
+    name: "C",
+  }).remove();  you will need this condition */
+  //If you don't use function remove then you don't need this condition
+  if (remove) {
+    console.log("This Element is Remove:\n", element);
+    return tacs.next();
+  }
+  if (element.name.length >= 1) {
+    console.log(element.name, index);
     tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
   }
 });
@@ -111,6 +124,17 @@ tacs.add([
     age: 40,
   },
 ]);
+//if you want remove element from the list use this
+tacs
+  .get({
+    name: "Joe",
+    //or you can use this
+    /*
+    name: "Joe",
+    age: 40,
+    */
+  })
+  .remove();
 //you can use this to add a delay between each function
 setTimeout(() => {
   tacs.add([{ name: "Arth", age: "unknown" }]);
@@ -126,17 +150,17 @@ setTimeout(() => {
     <th>explain</th>
   <tr>
     <td>$lab()</td>
-    <td>this is $lab function that will be emit when you add data or when you call next</td>
+    <td>this is $lab function that will be emit when you add element or when you call next</td>
     <td><a href=#lab>Go to example</a></td>
   </tr>
    <tr>
     <td>next()</td>
-    <td>go to next index if you set timeout use like this : setTimeout(tacs.next, 1000);//second</td>
+    <td>go to next index if you want set timeout use like this : setTimeout(tacs.next, 1000);//second</td>
     <td><a href=#next>Go to example</a></td>
   </tr>
      <tr>
     <td>add()</td>
-    <td>add data to the conveyor {data} is an array</td>
+    <td>add element to the conveyor {element} is an array</td>
     <td><a href=#add>Go to example</a></td>
   </tr>
     <tr>
@@ -156,7 +180,7 @@ setTimeout(() => {
   </tr>
    <tr>
     <td>get()</td>
-    <td>get Added Data or option</td>
+    <td>get Added Data or option or remove or exist</td>
     <td><a href=#get>Go to example</a></td>
   </tr>
 </table>
@@ -171,9 +195,16 @@ const tacs = new conveyor();
 ### **lab**
 
 ```js
-//this is $lab function that will be emit when you add data or when you call next
-tacs.$lab((data, index) => {
-  console.log(data, index); //index is the index of the data in the array
+//this is $lab function that will be emit when you add element or when you call next
+tacs.$lab((element, index, remove) => {
+  console.log(element, index, remove); //index is the index of the element in the array
+  //remove is a boolean if you use this function like this tacs.get(Element).remove(); you will need this condition
+  //If you don't use function remove then you don't need this condition
+  if (remove) {
+    console.log("This Element is Remove:\n", element);
+    tacs.next();
+    return;
+  }
   tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
 });
 ```
@@ -188,8 +219,8 @@ tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000)
 ### **add**
 
 ```js
-//if you want to add data to the conveyor use this
-// This is an example of adding data to the conveyor
+//if you want to add element to the conveyor use this
+// This is an example of adding element to the conveyor
 //Array
 tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]);
 //Object
@@ -213,8 +244,11 @@ tacs.sleep(1000); //sleep for 1 second
 
 ```js
 //The events
-tacs.on("add", (data) => {
-  console.log(data); //data is an array
+tacs.on("add", (element) => {
+  console.log(element); //element is an array
+});
+tacs.on("end", (element) => {
+  console.log(element); //Array: all the element in the conveyor
 });
 ```
 
@@ -235,9 +269,36 @@ tacs.end();
 ### **get**
 
 ```js
-//if you want get Added Data or option
-tacs.get().added; //Array: returns an array with the added data
+//if you want get Added Data or option or remove or exist
+tacs.get().added; //Array: returns an array with the added element
 tacs.get().option; //String: returns the last option
+tacs.get(/*<Element>*/).remove(); //No Return: remove element from the array
+tacs.get(/*<Element>*/).exist(); //Boolean: returns true if the element exist in the array
+//Some examples
+
+//@Remove element from the array
+
+tacs.get({ name: "Joe", age: 40 }).remove(); //remove element from the array
+//or you can use this specitic value
+tacs.get({ name: "Joe" }).remove(); //remove element from the array
+//String or Number or any other type
+tacs.get("JavaScript").remove(); //remove element from the array
+
+//@Exist element in the array
+tacs
+  .get({
+    name: "Joe",
+    age: 40,
+  })
+  .exist(); //returns true if the element exist in the array
+//or you can use this specitic value
+tacs
+  .get({
+    name: "Joe",
+  })
+  .exist(); //returns true if the element exist in the array
+//String or Number or any other type
+tacs.get("JavaScript").exist(); //returns true if the element exist in the array
 ```
 
 ## Links
