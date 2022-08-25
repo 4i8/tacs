@@ -69,7 +69,7 @@ function conveyor() {
    */
   this.add = function (element) {
     if (extension.end) return console.error(new Error("Conveyor is end !"));
-    if (element.length == 0 && typeof element !== "string") return;
+    if (element.length == 0 && typeof element === "object") return;
     extension.treasure = extension.treasure.concat(element);
     extension.decrease = element.length;
     if (extension.sleep) return; //Conveyor is sleeping !
@@ -133,19 +133,23 @@ function conveyor() {
             : value == element
             ? index
             : false;
-          if (index == Primitive) {
+          if (
+            typeof element === "number" ? value == element : index == Primitive
+          ) {
             extension.trash.push(index);
           }
         });
       },
       exist: () => {
-        return extension.treasure.find((value, index) => {
-          return contains(value, element)
-            ? index
-            : value == element
-            ? index
-            : false;
-        })
+        return extension.treasure
+          .map((value, index) => {
+            if (typeof element === "object" && contains(value, element)) {
+              return true;
+            } else if (value === element) {
+              return true;
+            }
+          })
+          .includes(true)
           ? true
           : false;
       },
