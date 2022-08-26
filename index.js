@@ -20,8 +20,8 @@ function conveyor() {
       event.emit(
         "$lab",
         res,
-        extension.treasure.indexOf(res),
-        extension.trash.includes(extension.treasure.indexOf(res))
+        extension.index,
+        extension.trash.includes(extension.index)
       );
     }
   });

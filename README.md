@@ -41,7 +41,6 @@ Tacs is Task Conveyor System is a system that can be used to run a series of fun
     - [remove](#remove)
     - [exist](#exist)
 
-
 # **Installation**
 
 ```sh-session
@@ -287,19 +286,19 @@ tacs.end();
 
 ### **get**
 
-> # **added**
+> #### **added**
 
 ```js
 tacs.get().added; //Array: returns an array with the added element
 ```
 
-> # **option**
+> #### **option**
 
 ```js
 tacs.get().option; //String: returns the last option
 ```
 
-> # **remove**
+> #### **remove**
 
 ```js
 tacs.get(/*<Element>*/).remove(); //No Return: remove element from the array
@@ -311,7 +310,7 @@ tacs.get({ name: "Joe" }).remove(); //remove element from the array
 tacs.get("JavaScript").remove(); //remove element from the array
 ```
 
-> # **exist**
+> #### **exist**
 
 ```js
 tacs.get(/*<Element>*/).exist(); //Boolean: returns true if the element exist in the array
