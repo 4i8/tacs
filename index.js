@@ -50,7 +50,10 @@ function conveyor() {
    */
   this.next = function () {
     return new Promise((resolve, reject) => {
-      if (extension.kill) return reject(new Error("Conveyor is kill ! you should create new conveyor"));
+      if (extension.kill)
+        return reject(
+          new Error("Conveyor is kill ! you should create new conveyor")
+        );
       if (extension.sleep) return; //Conveyor is sleeping !
       const i = extension.decrease--;
       if (i == 0) extension.decrease = 0;
@@ -75,7 +78,10 @@ function conveyor() {
    */
   this.add = function (element) {
     return new Promise((resolve, reject) => {
-      if (extension.kill) return reject(new Error("Conveyor is kill ! you should create new conveyor"));
+      if (extension.kill)
+        return reject(
+          new Error("Conveyor is kill ! you should create new conveyor")
+        );
       if (element.length == 0 && typeof element === "object") return;
       extension.treasure = extension.treasure.concat(element);
       extension.decrease = element.length;
@@ -128,6 +134,19 @@ function conveyor() {
    * @description - kill the conveyor use this if you use this you can't use next() or any other function
    */
   this.kill = function () {
+    setTimeout(() => {
+      event.emit("end", extension.treasure);
+    }, 1);
+    extension.kill = true;
+    setTimeout(() => {
+      event.removeAllListeners();
+    }, 1000);
+    return;
+  };
+  this.end = function () {
+    console.error(
+      new Error("this function is deprecated ! use kill() instead")
+    );
     setTimeout(() => {
       event.emit("end", extension.treasure);
     }, 1);
