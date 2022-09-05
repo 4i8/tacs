@@ -34,7 +34,7 @@ Tacs is Task Conveyor System is a system that can be used to run a series of fun
   - [add](#add)
   - [sleep](#sleep)
   - [on](#on)
-  - [end](#end)
+  - [kill](#kill)
   - [get](#get)
     - [added](#added)
     - [option](#option)
@@ -59,9 +59,11 @@ const tacs = new conveyor();
 
 > @latest
 
-```*
-+ Added: add remove and exist in get() function//go to the documentation for more details
-+ Added: add new event to the event list "end" //go to the documentation for more details
+```
++ add emit event("end") when you use kill method this event will be emitted
++ add promise support for add and next method (you can use async/await) or .then() or .catch() 
+- end() method removed
++ kill() method added for kill conveyor
 ```
 
 # **Example**
@@ -87,61 +89,81 @@ tacs.$lab((element, index, remove) => {
   }
   if (element.name.length >= 1) {
     console.log(element.name, index);
-    tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
+    tacs.next().catch((err) => {
+      console.log(err);
+      //Conveyor is kill ! you should create new conveyor
+      /*use catch if you use kill() method in your code */
+      //If you don't use function kill in your code then you don't need this catch
+    });
+    //if you want set timeout for this function include next method in setTimeout function
   }
 });
-tacs.add([
-  {
-    name: "JavaScript",
-    id: 1,
-  },
-  {
-    name: "Objective-C",
-    id: 2,
-  },
-  {
-    name: "C",
-    id: 3,
-  },
-  {
-    name: "C++",
-    id: 4,
-  },
-  {
-    name: "C#",
-    id: 5,
-  },
-  {
-    name: "Java",
-    id: 6,
-  },
-  {
-    name: "Python",
-    id: 7,
-  },
-]);
-tacs.add([
-  {
-    name: "John",
-    age: 30,
-  },
-  {
-    name: "Mary",
-    age: 25,
-  },
-  {
-    name: "Mike",
-    age: 20,
-  },
-  {
-    name: "Jane",
-    age: 35,
-  },
-  {
-    name: "Joe",
-    age: 40,
-  },
-]);
+tacs
+  .add([
+    {
+      name: "JavaScript",
+      id: 1,
+    },
+    {
+      name: "Objective-C",
+      id: 2,
+    },
+    {
+      name: "C",
+      id: 3,
+    },
+    {
+      name: "C++",
+      id: 4,
+    },
+    {
+      name: "C#",
+      id: 5,
+    },
+    {
+      name: "Java",
+      id: 6,
+    },
+    {
+      name: "Python",
+      id: 7,
+    },
+  ])
+  .catch((err) => {
+    console.log(err);
+    //Conveyor is kill ! you should create new conveyor
+    /*use catch if you use kill() method in your code */
+    //If you don't use function kill in your code then you don't need this catch
+  });
+tacs
+  .add([
+    {
+      name: "John",
+      age: 30,
+    },
+    {
+      name: "Mary",
+      age: 25,
+    },
+    {
+      name: "Mike",
+      age: 20,
+    },
+    {
+      name: "Jane",
+      age: 35,
+    },
+    {
+      name: "Joe",
+      age: 40,
+    },
+  ])
+  .catch((err) => {
+    console.log(err);
+    //Conveyor is kill ! you should create new conveyor
+    /*use catch if you use kill() method in your code */
+    //If you don't use function kill in your code then you don't need this catch
+  });
 //if you want remove element from the list use this
 tacs
   .get({
@@ -155,7 +177,12 @@ tacs
   .remove();
 //you can use this to add a delay between each function
 setTimeout(() => {
-  tacs.add([{ name: "Arth", age: "unknown" }]);
+  tacs.add([{ name: "Arth", age: "unknown" }]).catch((err) => {
+    console.log(err);
+    //Conveyor is kill ! you should create new conveyor
+    /*use catch if you use kill() method in your code */
+    //If you don't use function kill in your code then you don't need this catch
+  });
 }, 5000);
 ```
 
@@ -173,7 +200,7 @@ setTimeout(() => {
   </tr>
    <tr>
     <td>next()</td>
-    <td>go to next index if you want set timeout use like this : setTimeout(tacs.next, 1000);//second</td>
+    <td>go to next index</td>
     <td><a href=#next>Go to example</a></td>
   </tr>
      <tr>
@@ -192,9 +219,9 @@ setTimeout(() => {
     <td><a href=#on>Go to example</a></td>
   </tr> 
   <tr>
-    <td>end()</td>
-    <td>end the conveyor use this if you use this you can't use next() or any other function</td>
-    <td><a href=#end>Go to example</a></td>
+    <td>kill()</td>
+    <td>kill the conveyor use this if you use this you can't use next() or any other function</td>
+    <td><a href=#kill>Go to example</a></td>
   </tr>
    <tr>
     <td>get()</td>
@@ -220,10 +247,22 @@ tacs.$lab((element, index, remove) => {
   //If you don't use function remove then you don't need this condition
   if (remove) {
     console.log("This Element is Remove:\n", element);
-    tacs.next();
+    tacs.next().catch((err) => {
+      console.log(err);
+      //Conveyor is kill ! you should create new conveyor
+      /*use catch if you use kill() method in your code */
+      //If you don't use function kill in your code then you don't need this catch
+    });
+    //if you want set timeout for this function include next method in setTimeout function
     return;
   }
-  tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
+  tacs.next().catch((err) => {
+    console.log(err);
+    //Conveyor is kill ! you should create new conveyor
+    /*use catch if you use kill() method in your code */
+    //If you don't use function kill in your code then you don't need this catch
+  });
+  //if you want set timeout for this function include next method in setTimeout function
 });
 ```
 
@@ -231,7 +270,13 @@ tacs.$lab((element, index, remove) => {
 
 ```js
 //go to next index
-tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000);//second
+tacs.next().catch((err) => {
+  console.log(err);
+  //Conveyor is kill ! you should create new conveyor
+  /*use catch if you use kill() method in your code */
+  //If you don't use function kill in your code then you don't need this catch
+});
+//if you want set timeout for this function include next method in setTimeout function
 ```
 
 ### **add**
@@ -240,15 +285,32 @@ tacs.next(); //if you need to add timeout use this : setTimeout(tacs.next, 1000)
 //if you want to add element to the conveyor use this
 // This is an example of adding element to the conveyor
 //Array
-tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]);
-//Object
-tacs.add({
-  name: "John",
-  age: 30,
-  city: "New York",
+tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]).catch((err) => {
+  console.log(err);
+  //Conveyor is kill ! you should create new conveyor
+  /*use catch if you use kill() method in your code */
+  //If you don't use function kill in your code then you don't need this catch
 });
+//Object
+tacs
+  .add({
+    name: "John",
+    age: 30,
+    city: "New York",
+  })
+  .catch((err) => {
+    console.log(err);
+    //Conveyor is kill ! you should create new conveyor
+    /*use catch if you use kill() method in your code */
+    //If you don't use function kill in your code then you don't need this catch
+  });
 //String or Number or any other type
-tacs.add("Arth");
+tacs.add("Arth").catch((err) => {
+  console.log(err);
+  //Conveyor is kill ! you should create new conveyor
+  /*use catch if you use kill() method in your code */
+  //If you don't use function kill in your code then you don't need this catch
+});
 ```
 
 ### **sleep**
@@ -274,14 +336,19 @@ tacs.on("end", (element) => {
 
 ```js
 //if you want to restart the conveyor use this and it will restart from the first index
-tacs.add(tacs.get().added);
+tacs.add(tacs.get().added).catch((err) => {
+  console.log(err);
+  //Conveyor is kill ! you should create new conveyor
+  /*use catch if you use kill() method in your code */
+  //If you don't use function kill in your code then you don't need this catch
+});
 ```
 
-### **end**
+### **kill**
 
 ```js
-//end the conveyor use this if you use this you can't use next() or any other function
-tacs.end();
+//kill the conveyor use this if you use this you can't use next() or any other function
+tacs.kill();
 ```
 
 ### **get**
