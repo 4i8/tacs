@@ -61,7 +61,7 @@ const tacs = new conveyor();
 
 ```
 + add reject if conveyor is sleeping
-+ add resolve in latest next
++ add resolve in next() in latest index (Bug Resolve)
 ```
 
 # **Example**
