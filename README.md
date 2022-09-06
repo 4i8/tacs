@@ -60,10 +60,8 @@ const tacs = new conveyor();
 > @latest
 
 ```
-+ add emit event("end") when you use kill method this event will be emitted
-+ add promise support for add and next method (you can use async/await) or .then() or .catch() 
-- end() method removed
-+ kill() method added for kill conveyor
++ add reject if conveyor is sleeping
++ add resolve in latest next
 ```
 
 # **Example**
@@ -91,9 +89,9 @@ tacs.$lab((element, index, remove) => {
     console.log(element.name, index);
     tacs.next().catch((err) => {
       console.log(err);
-      //Conveyor is kill ! you should create new conveyor
+      //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
       /*use catch if you use kill() method in your code */
-      //If you don't use function kill in your code then you don't need this catch
+      //If you don't use kill() or sleep() in your code then you don't need this catch
     });
     //if you want set timeout for this function include next method in setTimeout function
   }
@@ -131,9 +129,9 @@ tacs
   ])
   .catch((err) => {
     console.log(err);
-    //Conveyor is kill ! you should create new conveyor
+    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
     /*use catch if you use kill() method in your code */
-    //If you don't use function kill in your code then you don't need this catch
+    //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 tacs
   .add([
@@ -160,9 +158,9 @@ tacs
   ])
   .catch((err) => {
     console.log(err);
-    //Conveyor is kill ! you should create new conveyor
+    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
     /*use catch if you use kill() method in your code */
-    //If you don't use function kill in your code then you don't need this catch
+    //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 //if you want remove element from the list use this
 tacs
@@ -179,9 +177,9 @@ tacs
 setTimeout(() => {
   tacs.add([{ name: "Arth", age: "unknown" }]).catch((err) => {
     console.log(err);
-    //Conveyor is kill ! you should create new conveyor
+    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
     /*use catch if you use kill() method in your code */
-    //If you don't use function kill in your code then you don't need this catch
+    //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 }, 5000);
 ```
@@ -249,18 +247,18 @@ tacs.$lab((element, index, remove) => {
     console.log("This Element is Remove:\n", element);
     tacs.next().catch((err) => {
       console.log(err);
-      //Conveyor is kill ! you should create new conveyor
+      //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
       /*use catch if you use kill() method in your code */
-      //If you don't use function kill in your code then you don't need this catch
+      //If you don't use kill() or sleep() in your code then you don't need this catch
     });
     //if you want set timeout for this function include next method in setTimeout function
     return;
   }
   tacs.next().catch((err) => {
     console.log(err);
-    //Conveyor is kill ! you should create new conveyor
+    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
     /*use catch if you use kill() method in your code */
-    //If you don't use function kill in your code then you don't need this catch
+    //If you don't use kill() or sleep() in your code then you don't need this catch
   });
   //if you want set timeout for this function include next method in setTimeout function
 });
@@ -272,9 +270,9 @@ tacs.$lab((element, index, remove) => {
 //go to next index
 tacs.next().catch((err) => {
   console.log(err);
-  //Conveyor is kill ! you should create new conveyor
+  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
   /*use catch if you use kill() method in your code */
-  //If you don't use function kill in your code then you don't need this catch
+  //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 //if you want set timeout for this function include next method in setTimeout function
 ```
@@ -287,9 +285,9 @@ tacs.next().catch((err) => {
 //Array
 tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]).catch((err) => {
   console.log(err);
-  //Conveyor is kill ! you should create new conveyor
+  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
   /*use catch if you use kill() method in your code */
-  //If you don't use function kill in your code then you don't need this catch
+  //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 //Object
 tacs
@@ -300,16 +298,16 @@ tacs
   })
   .catch((err) => {
     console.log(err);
-    //Conveyor is kill ! you should create new conveyor
+    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
     /*use catch if you use kill() method in your code */
-    //If you don't use function kill in your code then you don't need this catch
+    //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 //String or Number or any other type
 tacs.add("Arth").catch((err) => {
   console.log(err);
-  //Conveyor is kill ! you should create new conveyor
+  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
   /*use catch if you use kill() method in your code */
-  //If you don't use function kill in your code then you don't need this catch
+  //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 ```
 
@@ -338,9 +336,9 @@ tacs.on("end", (element) => {
 //if you want to restart the conveyor use this and it will restart from the first index
 tacs.add(tacs.get().added).catch((err) => {
   console.log(err);
-  //Conveyor is kill ! you should create new conveyor
+  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
   /*use catch if you use kill() method in your code */
-  //If you don't use function kill in your code then you don't need this catch
+  //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 ```
 

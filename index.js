@@ -54,10 +54,11 @@ function conveyor() {
         return reject(
           new Error("Conveyor is kill ! you should create new conveyor")
         );
-      if (extension.sleep) return; //Conveyor is sleeping !
+      if (extension.sleep) return reject(new Error("Conveyor is sleeping !"));
       const i = extension.decrease--;
       if (i == 0) extension.decrease = 0;
       if (extension.index == extension.treasure.length - 1) {
+        resolve(extension.treasure[extension.index]);
         extension.light = true;
         setTimeout(() => {
           event.emit("end", extension.treasure);
@@ -85,7 +86,7 @@ function conveyor() {
       if (element.length == 0 && typeof element === "object") return;
       extension.treasure = extension.treasure.concat(element);
       extension.decrease = element.length;
-      if (extension.sleep) return; //Conveyor is sleeping !
+      if (extension.sleep) return reject(new Error("Conveyor is sleeping !"));
       if (!extension.start && extension.index == 0) {
         setTimeout(() => {
           event.emit("back$lab", extension.treasure[extension.index]);

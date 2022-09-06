@@ -1,6 +1,6 @@
 {
   "name": "tacs",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Tacs is Task Conveyor System is a system that can be used to run a series of functions in a sequential order.",
   "main": "index.js",
   "types": "./types/index.d.ts",
