@@ -90,7 +90,7 @@ tacs.$lab((element, index, remove) => {
     tacs.next().catch((err) => {
       console.log(err);
       //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-      /*use catch if you use kill() method in your code */
+      /*use catch if you use kill() or sleep() method in your code */
       //If you don't use kill() or sleep() in your code then you don't need this catch
     });
     //if you want set timeout for this function include next method in setTimeout function
@@ -130,7 +130,7 @@ tacs
   .catch((err) => {
     console.log(err);
     //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() method in your code */
+    /*use catch if you use kill() or sleep() method in your code */
     //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 tacs
@@ -159,7 +159,7 @@ tacs
   .catch((err) => {
     console.log(err);
     //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() method in your code */
+    /*use catch if you use kill() or sleep() method in your code */
     //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 //if you want remove element from the list use this
@@ -178,7 +178,7 @@ setTimeout(() => {
   tacs.add([{ name: "Arth", age: "unknown" }]).catch((err) => {
     console.log(err);
     //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() method in your code */
+    /*use catch if you use kill() or sleep() method in your code */
     //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 }, 5000);
@@ -248,7 +248,7 @@ tacs.$lab((element, index, remove) => {
     tacs.next().catch((err) => {
       console.log(err);
       //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-      /*use catch if you use kill() method in your code */
+      /*use catch if you use kill() or sleep() method in your code */
       //If you don't use kill() or sleep() in your code then you don't need this catch
     });
     //if you want set timeout for this function include next method in setTimeout function
@@ -257,7 +257,7 @@ tacs.$lab((element, index, remove) => {
   tacs.next().catch((err) => {
     console.log(err);
     //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() method in your code */
+    /*use catch if you use kill() or sleep() method in your code */
     //If you don't use kill() or sleep() in your code then you don't need this catch
   });
   //if you want set timeout for this function include next method in setTimeout function
@@ -271,7 +271,7 @@ tacs.$lab((element, index, remove) => {
 tacs.next().catch((err) => {
   console.log(err);
   //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() method in your code */
+  /*use catch if you use kill() or sleep() method in your code */
   //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 //if you want set timeout for this function include next method in setTimeout function
@@ -286,7 +286,7 @@ tacs.next().catch((err) => {
 tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]).catch((err) => {
   console.log(err);
   //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() method in your code */
+  /*use catch if you use kill() or sleep() method in your code */
   //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 //Object
@@ -299,14 +299,14 @@ tacs
   .catch((err) => {
     console.log(err);
     //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() method in your code */
+    /*use catch if you use kill() or sleep() method in your code */
     //If you don't use kill() or sleep() in your code then you don't need this catch
   });
 //String or Number or any other type
 tacs.add("Arth").catch((err) => {
   console.log(err);
   //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() method in your code */
+  /*use catch if you use kill() or sleep() method in your code */
   //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 ```
@@ -337,7 +337,7 @@ tacs.on("end", (element) => {
 tacs.add(tacs.get().added).catch((err) => {
   console.log(err);
   //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() method in your code */
+  /*use catch if you use kill() or sleep() method in your code */
   //If you don't use kill() or sleep() in your code then you don't need this catch
 });
 ```
