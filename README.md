@@ -59,7 +59,7 @@ const tacs = new conveyor();
 
 > @latest
 
-```
+```diff
 + add reject if conveyor is sleeping
 + add resolve in next() in latest index (Bug Resolve)
 ```
