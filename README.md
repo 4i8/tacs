@@ -66,7 +66,7 @@ import { Conveyor, getConveyor } from "tacs";
 + sleep() (Bug Resolve)
 + drastic edit
 - reject in sleep
-```
+``` 
 
 # **Example**
 
