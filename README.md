@@ -318,7 +318,7 @@ tacs.get().option; //String: returns the last option
 > #### **remove**
 
 ```js
-//if you want remove element from the list use this this function will return true if the element is removed in remove parameter in $lab function
+//remove the element from the conveyor and return remove parameter in $lab function
 tacs.get(/*<Element>*/).remove(); //No Return: remove element from the array
 //Some examples
 tacs.get({ name: "Joe", age: 40 }).remove(); //remove element from the array
