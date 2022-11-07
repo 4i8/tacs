@@ -3,7 +3,6 @@
  <a href="https://www.npmjs.com/package/tacs"><img  src="https://github.com/4i8/tacs/raw/master/front/logo.png" width="400" alt="tacs" /></a>
   </p>
   <p>
- <a href="https://github.com/arosteam"><img src="https://img.shields.io/static/v1?label=powered%20by&message=Aros&color=000636&style=for-the-badge&logo=Windows%20Terminal&logoColor=fff"/></a>
  <a href="https://www.npmjs.com/package/tacs"><img src="https://img.shields.io/npm/v/tacs.svg?style=for-the-badge" alt="NPM version" /></a>
  <a href="https://www.npmjs.com/package/tacs"><img src="https://img.shields.io/npm/dt/tacs.svg?maxAge=3600&style=for-the-badge" alt="NPM downloads" /></a>
   </p>
@@ -11,17 +10,7 @@
 
 # **Task Conveyor System**
 
-Tacs is Task Conveyor System is a system that can be used to run a series of functions in a sequential order.
-
-- very helpful for automation or express.js development tasks
-- very useful for running a series of functions in a sequential order
-- very useful for running a series of functions in a parallel order
-
-## Gif Example By Dribbble
-
-  <p>
- <a href="https://dribbble.com/"><img  src="https://github.com/4i8/tacs/raw/master/front/By%20Dribbble.gif" width="400" alt="tacs" /></a>
-  </p>
+**tacs is a process management system inside the process (nodejs) to handle the huge amount of requests that need accuracy and slow down separately whatever and every time you do a push it will activate an algorithm ($lab), like a Conveyor System Imagine it yes this you can do that in your project**
 
 - [Documentation](#documentation)
 - [Updates](#Updates)
@@ -29,17 +18,17 @@ Tacs is Task Conveyor System is a system that can be used to run a series of fun
 - [Usage](#Usage)
   - [Example](#Example)
 - [Method](#Method)
-  - [$lab](#lab)
-  - [next](#next)
-  - [add](#add)
-  - [sleep](#sleep)
-  - [on](#on)
-  - [kill](#kill)
-  - [get](#get)
-    - [added](#added)
+  - [$lab()](#lab)
+  - [next()](#next)
+  - [push()](#push)
+  - [sleep()](#sleep)
+  - [on()](#on)
+  - [kill()](#kill)
+  - [get()](#get)
+    - [pushed](#pushed)
     - [option](#option)
-    - [remove](#remove)
-    - [exist](#exist)
+    - [remove()](#remove)
+    - [exist()](#exist)
 
 # **Installation**
 
@@ -50,18 +39,33 @@ yarn add tacs
 
 # **Usage**
 
+### CommonJS
+
 ```js
-const conveyor = require("tacs");
-const tacs = new conveyor();
+const { Conveyor, getConveyor } = require("tacs");
+```
+
+### ES6
+
+```js
+import { Conveyor, getConveyor } from "tacs";
 ```
 
 # **Updates**
 
 > @latest
 
-```
-+ add reject if conveyor is sleeping
-+ add resolve in next() in latest index (Bug Resolve)
+```diff
++ push Key System
++ push getConveyor() method to get conveyor without the need for an module.exports constructor (see example)
++ remove() (Bug Resolve)
+- push()
++ push() Replace For push()
+- get().pushed
++ get().pushed Replace For get().pushed
++ sleep() (Bug Resolve)
++ drastic edit
+- reject in sleep
 ```
 
 # **Example**
@@ -70,71 +74,28 @@ const tacs = new conveyor();
 
 #### **Try**
 
+#### **this is a simple example on replit Try it**
+
+<p><a href="https://replit.com/@onlyarth/tacs-try" title="Run on Replit badge"><img src="https://replit.com/badge/github/replit/codemirror-emacs" alt="Run on Replit badge" /></a></p>
+
+## **First Example (Without Key System)**
+
 ```js
-const conveyor = require("tacs");
-const tacs = new conveyor();
+const { Conveyor } = require("tacs");
+const tacs = new Conveyor();
 tacs.$lab((element, index, remove) => {
-  /*if you use 
-    remove
-    function like this
-    tacs.get({
-    name: "C",
-  }).remove();  you will need this condition */
-  //If you don't use function remove then you don't need this condition
+  //To see how remove works go to the examples (see remove)
   if (remove) {
     console.log("This Element is Remove:\n", element);
     return tacs.next();
   }
-  if (element.name.length >= 1) {
-    console.log(element.name, index);
-    tacs.next().catch((err) => {
-      console.log(err);
-      //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-      /*use catch if you use kill() or sleep() method in your code */
-      //If you don't use kill() or sleep() in your code then you don't need this catch
-    });
-    //if you want set timeout for this function include next method in setTimeout function
-  }
+  console.log(element, "My Index is: ", index);
+  tacs.next().catch((err) => {
+    console.log(err); //if you Kill the conveyor and you have a next() it will throw an error
+  });
 });
 tacs
-  .add([
-    {
-      name: "JavaScript",
-      id: 1,
-    },
-    {
-      name: "Objective-C",
-      id: 2,
-    },
-    {
-      name: "C",
-      id: 3,
-    },
-    {
-      name: "C++",
-      id: 4,
-    },
-    {
-      name: "C#",
-      id: 5,
-    },
-    {
-      name: "Java",
-      id: 6,
-    },
-    {
-      name: "Python",
-      id: 7,
-    },
-  ])
-  .catch((err) => {
-    console.log(err);
-    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() or sleep() method in your code */
-    //If you don't use kill() or sleep() in your code then you don't need this catch
-  });
-tacs
-  .add([
+  .push([
     {
       name: "John",
       age: 30,
@@ -157,31 +118,62 @@ tacs
     },
   ])
   .catch((err) => {
-    console.log(err);
-    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() or sleep() method in your code */
-    //If you don't use kill() or sleep() in your code then you don't need this catch
+    console.log(err); //if you Kill the conveyor and you have a push() it will throw an error
   });
-//if you want remove element from the list use this
-tacs
-  .get({
-    name: "Joe",
-    //or you can use this
-    /*
-    name: "Joe",
-    age: 40,
-    */
-  })
-  .remove();
-//you can use this to add a delay between each function
-setTimeout(() => {
-  tacs.add([{ name: "Arth", age: "unknown" }]).catch((err) => {
-    console.log(err);
-    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() or sleep() method in your code */
-    //If you don't use kill() or sleep() in your code then you don't need this catch
+//Every time you do a push it will activate $lab algorithm
+```
+
+## **Example (With Key System)**
+
+### index.js
+
+```js
+const { Conveyor, getConveyor } = require("tacs");
+const tacs = new Conveyor("employees"); //or getConveyor("employees", true);
+tacs.$lab((element, index, remove) => {
+  //To see how remove works go to the examples (see remove)
+  if (remove) {
+    console.log("This Element is Remove:\n", element);
+    return tacs.next();
+  }
+  console.log(element, "My Index is: ", index);
+  tacs.next().catch((err) => {
+    console.log(err); //if you Kill the conveyor and you have a next() it will throw an error
   });
-}, 5000);
+});
+//Every time you do a push it will activate $lab algorithm
+```
+
+### another.js
+
+```js
+const { getConveyor } = require("tacs");
+getConveyor("employees") //if you don't have a conveyor for this key it will throw an error
+  .push([
+    {
+      name: "John",
+      age: 30,
+    },
+    {
+      name: "Mary",
+      age: 25,
+    },
+    {
+      name: "Mike",
+      age: 20,
+    },
+    {
+      name: "Jane",
+      age: 35,
+    },
+    {
+      name: "Joe",
+      age: 40,
+    },
+  ])
+  .catch((err) => {
+    console.log(err); //if you Kill the conveyor and you have a push() it will throw an error
+  });
 ```
 
 ## documentation
@@ -193,7 +185,7 @@ setTimeout(() => {
     <th>explain</th>
   <tr>
     <td>$lab()</td>
-    <td>this is $lab function that will be emit when you add element or when you call next</td>
+    <td>this is $lab function that will be emit when you push element or when you call next</td>
     <td><a href=#lab>Go to example</a></td>
   </tr>
    <tr>
@@ -202,9 +194,9 @@ setTimeout(() => {
     <td><a href=#next>Go to example</a></td>
   </tr>
      <tr>
-    <td>add()</td>
-    <td>add element to the conveyor {element} is an array</td>
-    <td><a href=#add>Go to example</a></td>
+    <td>push()</td>
+    <td>push element to the conveyor {element} is an array</td>
+    <td><a href=#push>Go to example</a></td>
   </tr>
     <tr>
     <td>sleep()</td>
@@ -223,43 +215,27 @@ setTimeout(() => {
   </tr>
    <tr>
     <td>get()</td>
-    <td>get Added Data or option or remove or exist</td>
+    <td>get pushed Data or option or remove or exist</td>
     <td><a href=#get>Go to example</a></td>
   </tr>
 </table>
 
 # **Method**
 
-```js
-const conveyor = require("tacs");
-const tacs = new conveyor();
-```
-
 ### **lab**
 
 ```js
-//this is $lab function that will be emit when you add element or when you call next
+//this is $lab function that will be emit when you push element or when you call next
 tacs.$lab((element, index, remove) => {
-  console.log(element, index, remove); //index is the index of the element in the array
-  //remove is a boolean if you use this function like this tacs.get(Element).remove(); you will need this condition
-  //If you don't use function remove then you don't need this condition
+  console.log(element, index, remove);
+  //To see how remove works go to the examples (see remove)
   if (remove) {
     console.log("This Element is Remove:\n", element);
-    tacs.next().catch((err) => {
-      console.log(err);
-      //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-      /*use catch if you use kill() or sleep() method in your code */
-      //If you don't use kill() or sleep() in your code then you don't need this catch
-    });
+    tacs.next();
     //if you want set timeout for this function include next method in setTimeout function
     return;
   }
-  tacs.next().catch((err) => {
-    console.log(err);
-    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() or sleep() method in your code */
-    //If you don't use kill() or sleep() in your code then you don't need this catch
-  });
+  tacs.next();
   //if you want set timeout for this function include next method in setTimeout function
 });
 ```
@@ -268,47 +244,26 @@ tacs.$lab((element, index, remove) => {
 
 ```js
 //go to next index
-tacs.next().catch((err) => {
-  console.log(err);
-  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() or sleep() method in your code */
-  //If you don't use kill() or sleep() in your code then you don't need this catch
-});
+tacs.next();
 //if you want set timeout for this function include next method in setTimeout function
 ```
 
-### **add**
+### **push**
 
 ```js
-//if you want to add element to the conveyor use this
-// This is an example of adding element to the conveyor
+//push(Your Data)
+//if you want to push element to the conveyor use this
+// This is an example of pushing element to the conveyor
 //Array
-tacs.add(["JavaScript", "C", "C++", "C#", "Java", "Python"]).catch((err) => {
-  console.log(err);
-  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() or sleep() method in your code */
-  //If you don't use kill() or sleep() in your code then you don't need this catch
-});
+tacs.push(["JavaScript", "C", "C++", "C#", "Java", "Python"]);
 //Object
-tacs
-  .add({
-    name: "John",
-    age: 30,
-    city: "New York",
-  })
-  .catch((err) => {
-    console.log(err);
-    //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-    /*use catch if you use kill() or sleep() method in your code */
-    //If you don't use kill() or sleep() in your code then you don't need this catch
-  });
-//String or Number or any other type
-tacs.add("Arth").catch((err) => {
-  console.log(err);
-  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() or sleep() method in your code */
-  //If you don't use kill() or sleep() in your code then you don't need this catch
+tacs.push({
+  name: "John",
+  age: 30,
+  city: "New York",
 });
+//String or Number or any other type
+tacs.push("Arth");
 ```
 
 ### **sleep**
@@ -322,7 +277,7 @@ tacs.sleep(1000); //sleep for 1 second
 
 ```js
 //The events
-tacs.on("add", (element) => {
+tacs.on("push", (element) => {
   console.log(element); //element is an array
 });
 tacs.on("end", (element) => {
@@ -334,11 +289,8 @@ tacs.on("end", (element) => {
 
 ```js
 //if you want to restart the conveyor use this and it will restart from the first index
-tacs.add(tacs.get().added).catch((err) => {
-  console.log(err);
-  //Conveyor is kill ! you should create new conveyor or Conveyor is sleeping !
-  /*use catch if you use kill() or sleep() method in your code */
-  //If you don't use kill() or sleep() in your code then you don't need this catch
+tacs.on("end", (element) => {
+  tacs.push(tacs.get().pushed);
 });
 ```
 
@@ -351,10 +303,10 @@ tacs.kill();
 
 ### **get**
 
-> #### **added**
+> #### **pushed**
 
 ```js
-tacs.get().added; //Array: returns an array with the added element
+tacs.get().pushed; //Array: returns an array with the pushed element
 ```
 
 > #### **option**
@@ -366,6 +318,7 @@ tacs.get().option; //String: returns the last option
 > #### **remove**
 
 ```js
+//if you want remove element from the list use this this function will return true if the element is removed in remove parameter in $lab function
 tacs.get(/*<Element>*/).remove(); //No Return: remove element from the array
 //Some examples
 tacs.get({ name: "Joe", age: 40 }).remove(); //remove element from the array

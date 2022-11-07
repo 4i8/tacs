@@ -1,7 +1,7 @@
 const events = require("events");
 const contains = require("object-contains");
-function conveyor() {
-  let extension = {
+class Conveyor {
+  #extension = {
     light: false,
     kill: false,
     running: false,
@@ -13,173 +13,181 @@ function conveyor() {
     treasure: [],
     option: false,
   };
-  let event = new events.EventEmitter();
-  event.setMaxListeners(0);
-  event.on("back$lab", (res) => {
-    if (extension.treasure.length > 0) {
-      setTimeout(() => {
-        event.emit(
-          "$lab",
-          res,
-          extension.index,
-          extension.trash.includes(extension.index)
-        );
-      }, 1);
-    }
-  });
-  /**
-   * @description {callback} - this is $lab function that will be called when you add element or when you call next
-   */
-  this.$lab = function (callback) {
-    if (extension.kill)
-      return console.error(
-        new Error("Conveyor is kill ! you should create new conveyor")
+  #event = new events.EventEmitter();
+  constructor(key = false) {
+    process.conveyor = process.conveyor || {};
+    if (process.conveyor[key])
+      throw new Error(
+        `Conveyor is already exist ! use getConveyor("${key}") method`
       );
-    if (extension.running)
+    this.#event.setMaxListeners(0);
+    this.#event.on("back$lab", (res) => {
+      if (this.#extension.treasure.length > 0) {
+        setTimeout(() => {
+          this.#event.emit(
+            "$lab",
+            res,
+            this.#extension.index,
+            this.#extension.trash.includes(this.#extension.index)
+          );
+        }, 1);
+      }
+    });
+    if (key) {
+      process.conveyor[key] = process.conveyor[key] || this;
+    }
+  }
+  /**
+   * @description {callback} - this is $lab function that will be called when you push element or when you call next
+   */
+  $lab(callback) {
+    if (this.#extension.kill)
+      return console.error(
+        new Error("Conveyor is kill ! you should create new Conveyor")
+      );
+    if (this.#extension.running)
       return console.error(
         new Error(
-          "Conveyor is already running ! you should create new conveyor"
+          "Conveyor is already running ! you should create new Conveyor"
         )
       );
-    extension.decrease = extension.treasure.length;
-    extension.running = true;
-    event.on("$lab", callback);
-  };
+    this.#extension.decrease = this.#extension.treasure.length;
+    this.#extension.running = true;
+    this.#event.on("$lab", callback);
+  }
   /**
    * @description - go to next index
    */
-  this.next = function () {
+  next() {
     return new Promise((resolve, reject) => {
-      if (extension.kill)
+      if (this.#extension.kill)
         return reject(
-          new Error("Conveyor is kill ! you should create new conveyor")
+          new Error("Conveyor is kill ! you should create new Conveyor")
         );
-      if (extension.sleep) return reject(new Error("Conveyor is sleeping !"));
-      const i = extension.decrease--;
-      if (i == 0) extension.decrease = 0;
-      if (extension.index == extension.treasure.length - 1) {
-        resolve(extension.treasure[extension.index]);
-        extension.light = true;
+      if (this.#extension.sleep) return;
+      const i = this.#extension.decrease--;
+      if (i == 0) this.#extension.decrease = 0;
+      if (this.#extension.index == this.#extension.treasure.length - 1) {
+        resolve(this.#extension.treasure[this.#extension.index]);
+        this.#extension.light = true;
         setTimeout(() => {
-          event.emit("end", extension.treasure);
+          this.#event.emit("end", this.#extension.treasure);
         }, 1);
         return;
       }
-      extension.index++;
-      extension.light = false;
+      this.#extension.index++;
+      this.#extension.light = false;
       setTimeout(() => {
-        extension.option = extension.treasure[extension.index];
-        event.emit("back$lab", extension.treasure[extension.index]);
-        resolve(extension.treasure[extension.index]);
+        this.#extension.option =
+          this.#extension.treasure[this.#extension.index];
+        this.#event.emit(
+          "back$lab",
+          this.#extension.treasure[this.#extension.index]
+        );
+        resolve(this.#extension.treasure[this.#extension.index]);
       }, 1);
     });
-  };
+  }
   /**
-   * @description {element} - add element to the conveyor {element} is an array
+   * @description {element} - push element to the conveyor {element} is an array
    */
-  this.add = function (element) {
+  push(element) {
     return new Promise((resolve, reject) => {
-      if (extension.kill)
+      if (this.#extension.kill)
         return reject(
-          new Error("Conveyor is kill ! you should create new conveyor")
+          new Error("Conveyor is kill ! you should create new Conveyor")
         );
       if (element.length == 0 && typeof element === "object") return;
-      extension.treasure = extension.treasure.concat(element);
-      extension.decrease = element.length;
-      if (extension.sleep) return reject(new Error("Conveyor is sleeping !"));
-      if (!extension.start && extension.index == 0) {
+      this.#extension.treasure = this.#extension.treasure.concat(element);
+      this.#extension.decrease = element.length;
+      // if ( this.#extension.sleep) return reject(new Error("Conveyor is sleeping !"));
+      if (!this.#extension.start && this.#extension.index == 0) {
         setTimeout(() => {
-          event.emit("back$lab", extension.treasure[extension.index]);
-          resolve(extension.treasure[extension.index]);
+          this.#event.emit(
+            "back$lab",
+            this.#extension.treasure[this.#extension.index]
+          );
+          resolve(this.#extension.treasure[this.#extension.index]);
         }, 1);
-        extension.start = true;
-      } else if (extension.light) {
-        extension.index++;
+        this.#extension.start = true;
+      } else if (this.#extension.light) {
+        this.#extension.index++;
         setTimeout(() => {
-          event.emit("back$lab", extension.treasure[extension.index]);
-          resolve(extension.treasure[extension.index]);
+          this.#event.emit(
+            "back$lab",
+            this.#extension.treasure[this.#extension.index]
+          );
+          resolve(this.#extension.treasure[this.#extension.index]);
         }, 200);
       }
       setTimeout(() => {
-        event.emit("add", element);
+        this.#event.emit("push", element);
       }, 1);
       resolve(element);
     });
-  };
+  }
   /**
    * @description {timeout} - sleep the conveyor {timeout} milliseconds later after timeout is over it wil be next automatically
    */
-  this.sleep = function (timeout) {
+  sleep(timeout) {
     if (!timeout) return;
-    extension.sleep = true;
+    this.#extension.sleep = true;
     setTimeout(() => {
-      if (extension.sleep) {
-        extension.sleep = false;
+      if (this.#extension.sleep) {
+        this.#extension.sleep = false;
         this.next();
       }
     }, timeout);
-  };
+  }
   /**
-   * @description {event} -  add - end
+   * @description { this.#event} -  push - end
    * @description {callback} - The events
-   * @param {event_} add
+   * @param {event_} push
    */
-  this.on = function (event_, callback) {
-    if (["add", "end"].includes(event_)) {
-      event.on(event_, callback);
+  on(event_, callback) {
+    if (["push", "end"].includes(event_)) {
+      this.#event.on(event_, callback);
     } else {
-      event.on(event_, "Event is not found !");
+      throw new Error("Event is not found ! use push or end !");
     }
-  };
+  }
   /**
    * @description - kill the conveyor use this if you use this you can't use next() or any other function
    */
-  this.kill = function () {
+  kill() {
     setTimeout(() => {
-      event.emit("end", extension.treasure);
+      this.#event.emit("end", this.#extension.treasure);
     }, 1);
-    extension.kill = true;
+    this.#extension.kill = true;
     setTimeout(() => {
-      event.removeAllListeners();
+      this.#event.removeAllListeners();
     }, 1000);
     return;
-  };
-  this.end = function () {
-    console.error(
-      new Error("this function is deprecated ! use kill() instead")
-    );
-    setTimeout(() => {
-      event.emit("end", extension.treasure);
-    }, 1);
-    extension.kill = true;
-    setTimeout(() => {
-      event.removeAllListeners();
-    }, 1000);
-    return;
-  };
+  }
   /**
-   * @description - get Added Data or option or remove or exist
+   * @description - get Pushed Data or option or remove or exist
    */
-  this.get = (element) => {
+  get(element) {
     return {
-      added: [...extension.treasure],
-      option: `${extension.option}`,
+      pushed: [...this.#extension.treasure],
+      option: `${this.#extension.option}`,
       remove: () => {
-        extension.treasure.filter((value, index) => {
+        this.#extension.treasure.filter((value, index) => {
           const Primitive = contains(value, element)
             ? index
             : value == element
             ? index
             : false;
+          if (!Primitive) return;
           if (
             typeof element === "number" ? value == element : index == Primitive
           ) {
-            extension.trash.push(index);
+            this.#extension.trash.push(index);
           }
         });
       },
       exist: () => {
-        return extension.treasure
+        return this.#extension.treasure
           .map((value, index) => {
             if (typeof element === "object" && contains(value, element)) {
               return true;
@@ -192,6 +200,17 @@ function conveyor() {
           : false;
       },
     };
-  };
+  }
 }
-module.exports = conveyor;
+function getConveyor(key, upsert) {
+  if (!key) throw new Error("key is required !");
+  if (key && upsert && !process.conveyor[key]) {
+    process.conveyor[key] = new Conveyor(key);
+  }
+  if (!process.conveyor[key]) throw new Error("Conveyor is not found !");
+  return process.conveyor[key];
+}
+module.exports = {
+  Conveyor,
+  getConveyor,
+};

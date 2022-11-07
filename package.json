@@ -1,7 +1,8 @@
 {
   "name": "tacs",
-  "version": "1.4.6",
-  "description": "Tacs is Task Conveyor System is a system that can be used to run a series of functions in a sequential order.",
+  "author": "Arth",
+  "version": "2.0.0",
+  "description": "tacs is a process management system inside the process (nodejs) to handle the huge amount of requests that need accuracy and slow down separately whatever and every time you do a push it will activate an algorithm ($lab), like a Conveyor System Imagine it yes this you can do that in your project",
   "main": "index.js",
   "types": "./types/index.d.ts",
   "scripts": {
@@ -30,7 +31,6 @@
   },
   "homepage": "https://github.com/4i8/tacs#readme",
   "license": "Apache-2.0",
-  "author": "Arth",
   "dependencies": {
     "object-contains": "^0.1.0"
   }
