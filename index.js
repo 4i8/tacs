@@ -42,14 +42,10 @@ class Conveyor {
    */
   $lab(callback) {
     if (this.#extension.kill)
-      return console.error(
-        new Error("Conveyor is kill ! you should create new Conveyor")
-      );
+      throw new Error("Conveyor is kill ! you should create new Conveyor");
     if (this.#extension.running)
-      return console.error(
-        new Error(
-          "Conveyor is already running ! you should create new Conveyor"
-        )
+      throw new Error(
+        "Conveyor is already running ! you should create new Conveyor"
       );
     this.#extension.decrease = this.#extension.treasure.length;
     this.#extension.running = true;
@@ -204,6 +200,7 @@ class Conveyor {
 }
 function getConveyor(key, upsert) {
   if (!key) throw new Error("key is required !");
+  if (!process.conveyor) process.conveyor = {};
   if (key && upsert && !process.conveyor[key]) {
     process.conveyor[key] = new Conveyor(key);
   }

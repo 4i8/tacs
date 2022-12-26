@@ -1,7 +1,7 @@
 {
   "name": "tacs",
   "author": "Arth",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "tacs is a process management system inside the process (nodejs) to handle the huge amount of requests that need accuracy and slow down separately whatever and every time you do a push it will activate an algorithm ($lab), like a Conveyor System Imagine it yes this you can do that in your project",
   "main": "index.js",
   "types": "./types/index.d.ts",

@@ -56,17 +56,10 @@ import { Conveyor, getConveyor } from "tacs";
 > @latest
 
 ```diff
-+ push Key System
-+ push getConveyor() method to get conveyor without the need for an module.exports constructor (see example)
-+ remove() (Bug Resolve)
-- add()
-+ push() Replace For add()
-- get().added
-+ get().pushed Replace For get().added
-+ sleep() (Bug Resolve)
-+ drastic edit
-- reject in sleep
-``` 
++ if (!process.conveyor) process.conveyor = {}; => getConveyor()
+- console.error => Conveyor
++ throw error => Conveyor
+```
 
 # **Example**
 
