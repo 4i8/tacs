@@ -1,34 +1,34 @@
 const events = require("events");
 const contains = require("object-contains");
 class Conveyor {
-  #extension = {
-    light: false,
-    kill: false,
-    running: false,
-    sleep: false,
-    decrease: false,
-    start: false,
-    trash: [],
-    index: 0,
-    treasure: [],
-    option: false,
-  };
-  #event = new events.EventEmitter();
   constructor(key = false) {
+    this.$Events = new events.EventEmitter();
+    this.Extension = {
+      light: false,
+      kill: false,
+      running: false,
+      sleep: false,
+      decrease: false,
+      start: false,
+      trash: [],
+      index: 0,
+      treasure: [],
+      option: false,
+    };
     process.conveyor = process.conveyor || {};
     if (process.conveyor[key])
       throw new Error(
         `Conveyor is already exist ! use getConveyor("${key}") method`
       );
-    this.#event.setMaxListeners(0);
-    this.#event.on("back$lab", (res) => {
-      if (this.#extension.treasure.length > 0) {
+    this.$Events.setMaxListeners(0);
+    this.$Events.on("back$lab", (res) => {
+      if (this.Extension.treasure.length > 0) {
         setTimeout(() => {
-          this.#event.emit(
+          this.$Events.emit(
             "$lab",
             res,
-            this.#extension.index,
-            this.#extension.trash.includes(this.#extension.index)
+            this.Extension.index,
+            this.Extension.trash.includes(this.Extension.index)
           );
         }, 1);
       }
@@ -41,46 +41,45 @@ class Conveyor {
    * @description {callback} - this is $lab function that will be called when you push element or when you call next
    */
   $lab(callback) {
-    if (this.#extension.kill)
+    if (this.Extension.kill)
       throw new Error("Conveyor is kill ! you should create new Conveyor");
-    if (this.#extension.running)
+    if (this.Extension.running)
       throw new Error(
         "Conveyor is already running ! you should create new Conveyor"
       );
-    this.#extension.decrease = this.#extension.treasure.length;
-    this.#extension.running = true;
-    this.#event.on("$lab", callback);
+    this.Extension.decrease = this.Extension.treasure.length;
+    this.Extension.running = true;
+    this.$Events.on("$lab", callback);
   }
   /**
    * @description - go to next index
    */
   next() {
     return new Promise((resolve, reject) => {
-      if (this.#extension.kill)
+      if (this.Extension.kill)
         return reject(
           new Error("Conveyor is kill ! you should create new Conveyor")
         );
-      if (this.#extension.sleep) return;
-      const i = this.#extension.decrease--;
-      if (i == 0) this.#extension.decrease = 0;
-      if (this.#extension.index == this.#extension.treasure.length - 1) {
-        resolve(this.#extension.treasure[this.#extension.index]);
-        this.#extension.light = true;
+      if (this.Extension.sleep) return;
+      const i = this.Extension.decrease--;
+      if (i == 0) this.Extension.decrease = 0;
+      if (this.Extension.index == this.Extension.treasure.length - 1) {
+        resolve(this.Extension.treasure[this.Extension.index]);
+        this.Extension.light = true;
         setTimeout(() => {
-          this.#event.emit("end", this.#extension.treasure);
+          this.$Events.emit("end", this.Extension.treasure);
         }, 1);
         return;
       }
-      this.#extension.index++;
-      this.#extension.light = false;
+      this.Extension.index++;
+      this.Extension.light = false;
       setTimeout(() => {
-        this.#extension.option =
-          this.#extension.treasure[this.#extension.index];
-        this.#event.emit(
+        this.Extension.option = this.Extension.treasure[this.Extension.index];
+        this.$Events.emit(
           "back$lab",
-          this.#extension.treasure[this.#extension.index]
+          this.Extension.treasure[this.Extension.index]
         );
-        resolve(this.#extension.treasure[this.#extension.index]);
+        resolve(this.Extension.treasure[this.Extension.index]);
       }, 1);
     });
   }
@@ -89,35 +88,35 @@ class Conveyor {
    */
   push(element) {
     return new Promise((resolve, reject) => {
-      if (this.#extension.kill)
+      if (this.Extension.kill)
         return reject(
           new Error("Conveyor is kill ! you should create new Conveyor")
         );
       if (element.length == 0 && typeof element === "object") return;
-      this.#extension.treasure = this.#extension.treasure.concat(element);
-      this.#extension.decrease = element.length;
-      // if ( this.#extension.sleep) return reject(new Error("Conveyor is sleeping !"));
-      if (!this.#extension.start && this.#extension.index == 0) {
+      this.Extension.treasure = this.Extension.treasure.concat(element);
+      this.Extension.decrease = element.length;
+      // if ( this.Extension.sleep) return reject(new Error("Conveyor is sleeping !"));
+      if (!this.Extension.start && this.Extension.index == 0) {
         setTimeout(() => {
-          this.#event.emit(
+          this.$Events.emit(
             "back$lab",
-            this.#extension.treasure[this.#extension.index]
+            this.Extension.treasure[this.Extension.index]
           );
-          resolve(this.#extension.treasure[this.#extension.index]);
+          resolve(this.Extension.treasure[this.Extension.index]);
         }, 1);
-        this.#extension.start = true;
-      } else if (this.#extension.light) {
-        this.#extension.index++;
+        this.Extension.start = true;
+      } else if (this.Extension.light) {
+        this.Extension.index++;
         setTimeout(() => {
-          this.#event.emit(
+          this.$Events.emit(
             "back$lab",
-            this.#extension.treasure[this.#extension.index]
+            this.Extension.treasure[this.Extension.index]
           );
-          resolve(this.#extension.treasure[this.#extension.index]);
+          resolve(this.Extension.treasure[this.Extension.index]);
         }, 200);
       }
       setTimeout(() => {
-        this.#event.emit("push", element);
+        this.$Events.emit("push", element);
       }, 1);
       resolve(element);
     });
@@ -127,22 +126,22 @@ class Conveyor {
    */
   sleep(timeout) {
     if (!timeout) return;
-    this.#extension.sleep = true;
+    this.Extension.sleep = true;
     setTimeout(() => {
-      if (this.#extension.sleep) {
-        this.#extension.sleep = false;
+      if (this.Extension.sleep) {
+        this.Extension.sleep = false;
         this.next();
       }
     }, timeout);
   }
   /**
-   * @description { this.#event} -  push - end
+   * @description { this.$Events} -  push - end
    * @description {callback} - The events
    * @param {event_} push
    */
   on(event_, callback) {
     if (["push", "end"].includes(event_)) {
-      this.#event.on(event_, callback);
+      this.$Events.on(event_, callback);
     } else {
       throw new Error("Event is not found ! use push or end !");
     }
@@ -152,11 +151,11 @@ class Conveyor {
    */
   kill() {
     setTimeout(() => {
-      this.#event.emit("end", this.#extension.treasure);
+      this.$Events.emit("end", this.Extension.treasure);
     }, 1);
-    this.#extension.kill = true;
+    this.Extension.kill = true;
     setTimeout(() => {
-      this.#event.removeAllListeners();
+      this.$Events.removeAllListeners();
     }, 1000);
     return;
   }
@@ -165,10 +164,10 @@ class Conveyor {
    */
   get(element) {
     return {
-      pushed: [...this.#extension.treasure],
-      option: `${this.#extension.option}`,
+      pushed: [...this.Extension.treasure],
+      option: `${this.Extension.option}`,
       remove: () => {
-        this.#extension.treasure.filter((value, index) => {
+        this.Extension.treasure.filter((value, index) => {
           const Primitive = contains(value, element)
             ? index
             : value == element
@@ -178,12 +177,12 @@ class Conveyor {
           if (
             typeof element === "number" ? value == element : index == Primitive
           ) {
-            this.#extension.trash.push(index);
+            this.Extension.trash.push(index);
           }
         });
       },
       exist: () => {
-        return this.#extension.treasure
+        return this.Extension.treasure
           .map((value, index) => {
             if (typeof element === "object" && contains(value, element)) {
               return true;

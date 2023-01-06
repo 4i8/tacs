@@ -56,9 +56,7 @@ import { Conveyor, getConveyor } from "tacs";
 > @latest
 
 ```diff
-+ if (!process.conveyor) process.conveyor = {}; => getConveyor()
-- console.error => Conveyor
-+ throw error => Conveyor
++ Fix SyntaxError: Private field '#' must be declared in an enclosing class
 ```
 
 # **Example**
